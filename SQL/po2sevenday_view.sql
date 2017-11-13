@@ -22,6 +22,7 @@ with pvt as
           when valuenum <= 0 then null
           when itemid = 50815 and valuenum >  70 then null -- O2 flow
           when itemid = 50821 and valuenum > 800 then null -- PO2
+          when itemid = 50816 and valuenum > 100 AND valuenum<21 then null -- FiO2
            -- conservative upper limit
         else valuenum
         end as valuenum
