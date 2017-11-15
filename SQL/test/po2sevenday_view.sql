@@ -2,15 +2,15 @@
 --后期还会从chartevents中提取，到时候两部分合并
 --患者进入ICU前六小时和后7天的数据
 
-DROP MATERIALIZED VIEW IF EXISTS po2sevenday CASCADE;
-CREATE MATERIALIZED VIEW po2sevenday AS
+--DROP MATERIALIZED VIEW IF EXISTS po2sevenday CASCADE;
+--CREATE MATERIALIZED VIEW po2sevenday AS
 with pvt as
 ( -- begin query that extracts the data
   select ie.subject_id, ie.hadm_id, ie.icustay_id
   -- here we assign labels to ITEMIDs
   -- this also fuses together multiple ITEMIDs containing the same data
       , case
-        when itemid = 50815 then 'O2FLOW'
+        when itemid = 50819 then 'PEEP'
         when itemid = 50816 then 'FIO2'
         when itemid = 50821 then 'PO2'
         else null
@@ -20,13 +20,13 @@ with pvt as
         -- add in some sanity checks on the values
         , case
           when valuenum <= 0 then null
-          when itemid = 50815 and valuenum >  70 then null -- O2 flow
+
           when itemid = 50821 and valuenum > 800 then null -- PO2
           when itemid = 50816 and valuenum > 100 AND valuenum<21 then null -- FiO2
            -- conservative upper limit
         else valuenum
         end as valuenum
-    from icustays ie
+    from  ie
     left join labevents le
       on le.subject_id = ie.subject_id and le.hadm_id = ie.hadm_id
       and le.charttime between (ie.intime - interval '6' hour) and (ie.intime + interval '7' day)
