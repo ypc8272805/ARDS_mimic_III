@@ -67,9 +67,9 @@ SELECT *
       outtime,
       charttime,
       itemid,
-      value
+
       -- add in some sanity checks on the values
-      ,
+
       CASE
       WHEN valuenum <= 0
         THEN NULL
@@ -126,7 +126,7 @@ SELECT *
                )
 )
 select pvt.SUBJECT_ID, pvt.HADM_ID, pvt.ICUSTAY_ID, pvt.CHARTTIME
-, max(case when label = 'SPO2' then value else null end) as SPO2
+, max(case when label = 'SPO2' then valuenum else null end) as SPO2
 , max(case when label = 'PAO2' then valuenum else null end) as PAO2
 , max(case when label = 'FIO2' then valuenum else null end) as FIO2
 , max(case when label = 'HR' then valuenum else null end) as HR
