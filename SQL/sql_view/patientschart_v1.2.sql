@@ -1,5 +1,6 @@
 DROP MATERIALIZED VIEW IF EXISTS patientschart CASCADE;
-create materialized view patientschart as WITH allpatients AS (
+create materialized view patientschart as
+  WITH allpatients AS (
   SELECT select_patient.subject_id,select_patient.hadm_id,select_patient.icustay_id,select_patient.intime,select_patient.outtime
   ,select_patient.exclusion_age,select_patient.exclusion_chest,select_patient.exclusion_first_stay,select_patient.exclusion_los,select_patient.exclusion_vent,pf.exclusion_pf
 FROM select_patient
@@ -51,6 +52,11 @@ SELECT * FROM allpatients
         WHEN itemid IN (456, 52, 6702, 443, 220052, 220181, 225312) AND valuenum>0 AND valuenum<300 THEN valuenum--bpm
         WHEN itemid IN (615, 618, 220210, 224690) AND valuenum>=0 AND valuenum<70 THEN valuenum--rr
         WHEN itemid IN (681, 682, 2400, 2408, 2534, 2420, 224685) AND valuenum>100 THEN valuenum--tv
+        WHEN itemid IN (507, 535, 224695) AND valuenum>0 AND valuenum<100 THEN valuenum--pip
+        WHEN itemid IN (543, 224696) AND valuenum>0 AND valuenum<100 THEN valuenum--plap
+        WHEN itemid IN (445, 448, 450, 224687) AND valuenum>100 THEN valuenum--mv
+        WHEN itemid IN (444, 3502, 3503, 224697) AND valuenum>0 AND valuenum<100 THEN valuenum--map
+        WHEN itemid IN (506, 220339) AND valuenum>0 AND valuenum<40 THEN valuenum--peep
         ELSE NULL
       END AS valuenum,valueuom
     FROM my_patients ie
