@@ -1,10 +1,10 @@
-DROP MATERIALIZED VIEW IF EXISTS matchvalue CASCADE;
-CREATE MATERIALIZED VIEW matchvalue AS
+DROP MATERIALIZED VIEW IF EXISTS matchvalue_lab CASCADE;
+CREATE MATERIALIZED VIEW matchvalue_lab AS
 WITH pao2 AS (
   SELECT subject_id,hadm_id,icustay_id,charttime
-  ,pao2
+  ,pao2_l AS pao2
   FROM patientsvalue
-  WHERE pao2 is NOT NULL
+  WHERE pao2_l is NOT NULL
 ),spo2 AS (
   SELECT subject_id,hadm_id,icustay_id,charttime
   ,spo2
