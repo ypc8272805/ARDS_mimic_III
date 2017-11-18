@@ -54,7 +54,7 @@ SELECT * FROM allpatients
         WHEN itemid IN (681, 682, 2400, 2408, 2534, 2420, 224685) AND valuenum>100 THEN valuenum--tv
         WHEN itemid IN (507, 535, 224695) AND valuenum>0 AND valuenum<100 THEN valuenum--pip
         WHEN itemid IN (543, 224696) AND valuenum>0 AND valuenum<100 THEN valuenum--plap
-        WHEN itemid IN (445, 448, 450, 224687) AND valuenum>100 THEN valuenum--mv
+        WHEN itemid IN (445, 448, 450, 224687) AND valuenum>0 THEN valuenum--mv
         WHEN itemid IN (444, 3502, 3503, 224697) AND valuenum>0 AND valuenum<100 THEN valuenum--map
         WHEN itemid IN (506, 220339) AND valuenum>0 AND valuenum<40 THEN valuenum--peep
         ELSE NULL
